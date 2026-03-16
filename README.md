@@ -1,14 +1,20 @@
 # macos-darkmode
 
-Your friendly neighbordhood macOS Dark Mode CLI. Dark Mode is set via Apples private APIs instead of the usual Apple Script.
+> Fork of [mafredri/macos-darkmode](https://github.com/mafredri/macos-darkmode) with a fix for building on modern macOS (arm64), where `BOOL` is C99 `_Bool` instead of `signed char`.
 
-Tested on macOS Mojave (10.14).
+Your friendly neighborhood macOS Dark Mode CLI. Dark Mode is set via Apples private APIs instead of the usual Apple Script.
+
+Tested on macOS Mojave (10.14) and macOS Sequoia (15, arm64).
 
 ## Installing
 
 ```console
-$ go get -u github.com/mafredri/macos-darkmode/cmd/darkmode
+$ go build -o darkmode ./cmd/darkmode
+$ codesign -s - darkmode
+$ cp darkmode /usr/local/bin/
 ```
+
+The binary must be ad-hoc signed after building, otherwise macOS will kill it when it tries to access the private SkyLight framework.
 
 ## Usage
 

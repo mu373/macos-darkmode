@@ -3,9 +3,11 @@ package main
 /*
 #cgo LDFLAGS: -F/System/Library/PrivateFrameworks -framework SkyLight
 
+#import <objc/objc.h>
+
 // Private APIs for Dark Mode.
-void SLSSetAppearanceThemeLegacy(int);
-int SLSGetAppearanceThemeLegacy();
+void SLSSetAppearanceThemeLegacy(BOOL);
+BOOL SLSGetAppearanceThemeLegacy();
 */
 import "C"
 
@@ -17,15 +19,11 @@ import (
 )
 
 func darkModeEnabled() bool {
-	return C.SLSGetAppearanceThemeLegacy() == 1
+	return bool(C.SLSGetAppearanceThemeLegacy())
 }
 
 func setDarkMode(on bool) {
-	var b C.int
-	if on {
-		b = 1
-	}
-	C.SLSSetAppearanceThemeLegacy(b)
+	C.SLSSetAppearanceThemeLegacy(C.BOOL(on))
 }
 
 func usage() {
